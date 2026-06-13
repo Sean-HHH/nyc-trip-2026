@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New York · June 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0A0A0A;
+      --white: #FFFFFF;
+      --bg: #F7F6F3;
+      --card: #FFFFFF;
+      --border: #E5E5E3;
+      --text: #1A1A1A;
+      --text-2: #6B6B6B;
+      --text-3: #9CA3AF;
+      --accent: #C8102E;
+      --accent-bg: #FEF2F2;
+      --d1: #374151; --d2: #1D4ED8; --d3: #C8102E; --d4: #7C3AED; --d5: #065F46;
+      --r: 12px; --r-sm: 8px;
+      --sh: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --sh-md: 0 4px 16px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+    /* HERO */
+    .hero { background: var(--black); color: var(--white); padding: 80px 24px 60px; position: relative; overflow: hidden; }
+    .hero::after { content: 'NYC'; position: absolute; right: -10px; bottom: -20px; font-family: 'Playfair Display', serif; font-size: 200px; font-weight: 700; color: rgba(255,255,255,0.03); line-height: 1; pointer-events: none; letter-spacing: -8px; }
+    .hero-inner { max-width: 700px; margin: 0 auto; position: relative; }
+    .hero-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(56px, 13vw, 100px); font-weight: 700; line-height: 0.92; letter-spacing: -2px; margin-bottom: 28px; }
+    .hero h1 em { font-style: italic; color: rgba(255,255,255,0.38); }
+    .hero-meta { display: flex; gap: 28px; flex-wrap: wrap; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.1); }
+    .hero-meta-item .lbl { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.32); margin-bottom: 3px; }
+    .hero-meta-item .val { font-size: 14px; font-weight: 500; color: var(--white); }
+
+    /* LAYOUT */
+    .container { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+    .sec { padding: 44px 0 0; }
+    .sec-label { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--text-3); margin-bottom: 18px; }
+
+    /* INFO STRIP */
+    .info-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .info-strip .full { grid-column: 1 / -1; }
+    .icard { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 16px 18px; display: flex; gap: 12px; align-items: flex-start; box-shadow: var(--sh); }
+    .icard-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .icard-icon.dep { background: #EFF6FF; color: #2563EB; }
+    .icard-icon.arr { background: #F5F3FF; color: #7C3AED; }
+    .icard-icon.hot { background: var(--accent-bg); color: var(--accent); }
+    .icard-body .lbl { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-3); margin-bottom: 2px; }
+    .icard-body .main { font-size: 14px; font-weight: 700; color: var(--text); }
+    .icard-body .sub { font-size: 12px; color: var(--text-2); margin-top: 2px; line-height: 1.5; }
+
+    /* DAY CARDS */
+    .days { display: flex; flex-direction: column; gap: 20px; padding-bottom: 80px; }
+    .day-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: var(--sh-md); }
+    .day-banner { width: 100%; height: 180px; object-fit: cover; display: block; }
+    .day-banner-strip { display: grid; height: 160px; gap: 3px; overflow: hidden; }
+    .day-banner-strip.three { grid-template-columns: 1.2fr 1fr 1fr; }
+    .day-banner-strip.two   { grid-template-columns: 1fr 1fr; }
+    .day-banner-strip img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .day-head { padding: 24px 28px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 20px; }
+    .day-num-lbl { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-3); }
+    .day-num-big { font-family: 'Playfair Display', serif; font-size: 44px; font-weight: 700; line-height: 1; letter-spacing: -1px; margin-top: 2px; }
+    .day-card:nth-child(1) .day-num-big { color: var(--d1); }
+    .day-card:nth-child(2) .day-num-big { color: var(--d2); }
+    .day-card:nth-child(3) .day-num-big { color: var(--d3); }
+    .day-card:nth-child(4) .day-num-big { color: var(--d4); }
+    .day-card:nth-child(5) .day-num-big { color: var(--d5); }
+    .day-head-r { flex: 1; padding-top: 6px; }
+    .day-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; line-height: 1.2; color: var(--text); }
+    .day-date { font-size: 12px; color: var(--text-2); margin-top: 4px; }
+
+    /* TIMELINE */
+    .tl { padding: 8px 28px 4px; }
+    .tl-row { display: grid; grid-template-columns: 40px 1fr; position: relative; }
+    .tl-left { display: flex; flex-direction: column; align-items: center; padding-top: 16px; }
+    .tl-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); flex-shrink: 0; position: relative; z-index: 1; }
+    .tl-dot.key { background: var(--accent); width: 12px; height: 12px; }
+    .tl-row:not(:last-child) .tl-left::after { content: ''; flex: 1; width: 1px; background: var(--border); margin-top: 6px; min-height: 24px; }
+    .tl-r { padding: 10px 0 22px; }
+    .tl-time { font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text-3); margin-bottom: 3px; }
+    .tl-title { font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.3; }
+    .tl-desc { font-size: 13px; color: var(--text-2); line-height: 1.65; margin-top: 5px; }
+
+    /* PILLS */
+    .pills { margin-top: 10px; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; }
+    .pill { display: flex; align-items: flex-start; gap: 6px; padding: 7px 10px; background: var(--bg); border-radius: var(--r-sm); border: 1px solid var(--border); }
+    .pill svg { flex-shrink: 0; margin-top: 1px; }
+    .pill-lbl { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-3); margin-bottom: 1px; }
+    .pill-val { font-size: 12px; color: var(--text); font-weight: 500; line-height: 1.4; }
+
+    /* TAGS */
+    .tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 9px; }
+    .tag { font-size: 10px; font-weight: 600; letter-spacing: 0.5px; padding: 3px 8px; border-radius: 20px; border: 1px solid transparent; }
+    .t-art    { background: #F3E8FF; color: #6D28D9; border-color: #DDD6FE; }
+    .t-sight  { background: #EFF6FF; color: #1D4ED8; border-color: #BFDBFE; }
+    .t-food   { background: #FFF7ED; color: #C2410C; border-color: #FED7AA; }
+    .t-nature { background: #F0FDF4; color: #15803D; border-color: #BBF7D0; }
+    .t-flight { background: #FDF4FF; color: #9333EA; border-color: #E9D5FF; }
+    .t-opt    { background: #F8FAFC; color: #475569; border-color: #CBD5E1; font-style: italic; }
+
+    /* NOTE */
+    .note { margin: 0 28px 20px; padding: 12px 14px; background: #FFFBEB; border: 1px solid #FDE68A; border-radius: var(--r-sm); font-size: 12px; color: #92400E; line-height: 1.5; }
+
+    /* KEENS */
+    .keens { margin: 0 28px 24px; padding: 20px 22px; background: var(--black); border-radius: var(--r); display: flex; gap: 16px; align-items: flex-start; }
+    .keens-icon { width: 40px; height: 40px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: white; }
+    .keens-title { font-family: 'Playfair Display', serif; font-size: 16px; color: white; margin-bottom: 5px; }
+    .keens-detail { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+    .keens-badge { display: inline-block; margin-top: 9px; padding: 4px 12px; background: var(--accent); color: white; border-radius: 20px; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+
+    /* TRANSPORT SECTION */
+    .tx-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .tx-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 18px 20px; box-shadow: var(--sh); }
+    .tx-card.full { grid-column: 1 / -1; }
+    .tx-card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .tx-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .tx-icon.blue  { background: #EFF6FF; color: #2563EB; }
+    .tx-icon.green { background: #F0FDF4; color: #15803D; }
+    .tx-icon.amber { background: #FFFBEB; color: #B45309; }
+    .tx-icon.gray  { background: #F3F4F6; color: #374151; }
+    .tx-card-title { font-size: 13px; font-weight: 700; color: var(--text); }
+    .tx-card-sub   { font-size: 11px; color: var(--text-3); margin-top: 1px; }
+
+    /* fare compare table */
+    .fare-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .fare-table th { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-3); text-align: left; padding: 0 0 8px; border-bottom: 1px solid var(--border); }
+    .fare-table td { padding: 9px 0; border-bottom: 1px solid var(--border); color: var(--text-2); vertical-align: top; line-height: 1.45; }
+    .fare-table td:first-child { font-weight: 600; color: var(--text); width: 38%; }
+    .fare-table tr:last-child td { border-bottom: none; }
+    .rec-badge { display: inline-block; margin-left: 6px; padding: 1px 7px; background: #F0FDF4; color: #15803D; border: 1px solid #BBF7D0; border-radius: 20px; font-size: 9px; font-weight: 700; letter-spacing: 0.5px; vertical-align: middle; }
+
+    /* route rows */
+    .route-list { display: flex; flex-direction: column; gap: 8px; }
+    .route-row { display: flex; align-items: flex-start; gap: 10px; padding: 9px 12px; background: var(--bg); border-radius: var(--r-sm); border: 1px solid var(--border); }
+    .route-row-left { flex: 1; }
+    .route-label { font-size: 12px; font-weight: 600; color: var(--text); line-height: 1.3; }
+    .route-detail { font-size: 11px; color: var(--text-2); margin-top: 2px; line-height: 1.45; }
+    .route-badge { flex-shrink: 0; font-size: 11px; font-weight: 600; color: var(--text-3); white-space: nowrap; margin-top: 1px; }
+
+    /* subway line badges */
+    .line { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%; font-size: 10px; font-weight: 700; color: white; margin-right: 2px; flex-shrink: 0; }
+    .line-7  { background: #B933AD; }
+    .line-45 { background: #00933C; }
+    .line-ace { background: #2850AD; }
+    .line-nrw { background: #FCCC0A; color: #1A1A1A; }
+    .line-l  { background: #A7A9AC; }
+
+    /* app pills */
+    .app-list { display: flex; flex-direction: column; gap: 8px; }
+    .app-row { display: flex; align-items: center; gap: 10px; }
+    .app-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+    .app-name { font-size: 13px; font-weight: 600; color: var(--text); min-width: 100px; }
+    .app-desc { font-size: 12px; color: var(--text-2); }
+
+    /* alert strip */
+    .tx-alert { margin-top: 10px; padding: 10px 12px; background: #FFFBEB; border: 1px solid #FDE68A; border-radius: var(--r-sm); font-size: 12px; color: #92400E; line-height: 1.5; }
+
+    /* FOOTER */
+    .footer { text-align: center; padding: 36px 20px 48px; font-size: 12px; color: var(--text-3); border-top: 1px solid var(--border); }
+    .footer strong { color: var(--text-2); }
+
+    /* RESPONSIVE */
+    @media (max-width: 560px) {
+      .info-strip { grid-template-columns: 1fr; }
+      .info-strip .full { grid-column: 1; }
+      .day-head { padding: 20px; }
+      .tl { padding: 8px 20px 4px; }
+      .note, .keens { margin-left: 20px; margin-right: 20px; }
+      .pills { grid-template-columns: 1fr 1fr; }
+      .tx-grid { grid-template-columns: 1fr; }
+      .tx-card.full { grid-column: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Travel Itinerary · June 2026</div>
+    <h1>New<br><em>York.</em></h1>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><div class="lbl">出發</div><div class="val">Jun 16 · CI12</div></div>
+      <div class="hero-meta-item"><div class="lbl">回程</div><div class="val">Jun 21 · CI11</div></div>
+      <div class="hero-meta-item"><div class="lbl">住宿</div><div class="val">Flushing, Queens</div></div>
+      <div class="hero-meta-item"><div class="lbl">旅伴</div><div class="val">2 人</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <section class="sec">
+    <div class="sec-label">航班 &amp; 住宿</div>
+    <div class="info-strip">
+
+      <div class="icard">
+        <div class="icard-icon dep">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        </div>
+        <div class="icard-body">
+          <div class="lbl">去程</div>
+          <div class="main">CI 12 · Jun 16</div>
+          <div class="sub">台北 TPE → 紐約 JFK<br>當地晚間抵達</div>
+        </div>
+      </div>
+
+      <div class="icard">
+        <div class="icard-icon arr">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" transform="scale(-1,1) translate(-24,0)"/></svg>
+        </div>
+        <div class="icard-body">
+          <div class="lbl">回程</div>
+          <div class="main">CI 11 · Jun 21 01:15</div>
+          <div class="sub">紐約 JFK → 台北 TPE<br>6/20 深夜 22:00 前往機場</div>
+        </div>
+      </div>
+
+      <div class="icard full">
+        <div class="icard-icon hot">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="icard-body">
+          <div class="lbl">住宿</div>
+          <div class="main">Sheraton LaGuardia East Hotel</div>
+          <div class="sub">Flushing, Queens · 地鐵 7 號線直達 Midtown（約 30 分鐘）· 法拉盛亞洲美食圈</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-label">行程總覽</div>
+    <div class="days">
+
+      <!-- DAY 1 -->
+      <article class="day-card">
+        <div class="day-head">
+          <div>
+            <div class="day-num-lbl">Day</div>
+            <div class="day-num-big">01</div>
+          </div>
+          <div class="day-head-r">
+            <div class="day-title">抵達 · 法拉盛</div>
+            <div class="day-date">Tuesday, June 16</div>
+          </div>
+        </div>
+        <div class="tl">
+
+          <div class="tl-row">
+            <div class="tl-left"><div class="tl-dot key"></div></div>
+            <div class="tl-r">
+              <div class="tl-time">晚間</div>
+              <div class="tl-title">CI12 抵達 JFK</div>
+              <div class="tl-desc">入境後搭 AirTrain + 地鐵 7 號線前往 Flushing，車程約 50 分鐘；或叫 Uber 省力（約 $40–55）。</div>
+              <div class="pills">
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                  <div><div class="pill-lbl">交通</div><div class="pill-val">AirTrain → 地鐵 7 號線</div></div>
+                </div>
+              </div>
+              <div class="tags"><span class="tag t-flight">航班</span></div>
+            </div>
+          </div>
+
+          <div class="tl-row">
+            <div class="tl-left"><div class="tl-dot"></div></div>
+            <div class="tl-r">
+              <div class="tl-time">入住後</div>
+              <div class="tl-title">法拉盛宵夜</div>
+              <div class="tl-desc">Main St 與 Roosevelt Ave 一帶：台灣牛肉麵、港式茶餐廳、韓式炸雞，半夜都有開。飛了一整天，輕鬆吃就好。</div>
+              <div class="tags"><span class="tag t-food">美食</span></div>
+            </div>
+          </div>
+
+        </div>
+        <div class="note">長途飛行後建議早點休息，明天要走很多路。</div>
+      </article>
+
+      <!-- DAY 2 -->
+      <article class="day-card">
+        <div class="day-banner-strip three">
+          <img src="https://images.unsplash.com/photo-1661959118121-c3f0ebf1345e?w=600&auto=format&fit=crop&q=80" alt="Wall Street" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1479779978657-f97923f70d04?w=600&auto=format&fit=crop&q=80" alt="Brooklyn Bridge" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1662369801019-d2d8daeb1f38?w=600&auto=format&fit=crop&q=80" alt="DUMBO" loading="lazy">
+        </div>
+        <div class="day-head">
+          <div>
+            <div class="day-num-lbl">Day</div>
+            <div class="day-num-big">02</div>
+          </div>
+          <div class="day-head-r">
+            <div class="day-title">Downtown · Brooklyn</div>
+            <div class="day-date">Wednesday, June 17</div>
+          </div>
+        </div>
+        <div class="tl">
+
+          <div class="tl-row">
+            <div class="tl-left"><div class="tl-dot"></div></div>
+            <div class="tl-r">
+              <div class="tl-time">上午 9:00</div>
+              <div class="tl-title">華爾街 · 金融區</div>
+              <div class="tl-desc">Charging Bull 銅牛、Fearless Girl、NYSE 紐約證交所外觀，以及 Oculus（Westfield World Trade Center）白色拱頂——建築本身就值得入內一看。</div>
+              <div class="pills">
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  <div><div class="pill-lbl">時間</div><div class="pill-val">隨時可逛</div></div>
+                </div>
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                  <div><div class="pill-lbl">費用</div><div class="pill-val">免費</div></div>
+                </div>
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                  <div><div class="pill-lbl">交通</div><div class="pill-val">地鐵 4/5 Fulton St 站</div></div>
+                </div>
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  <div><div class="pill-lbl">小撇步</div><div class="pill-val">9am 前人少，易拍照</div></div>
+                </div>
+              </div>
+              <div class="tags"><span class="tag t-sight">地標</span></div>
+            </div>
+          </div>
+
+          <div class="tl-row">
+            <div class="tl-left"><div class="tl-dot key"></div></div>
+            <div class="tl-r">
+              <div class="tl-time">中午 11:00</div>
+              <div class="tl-title">Brooklyn Bridge 步行</div>
+              <div class="tl-desc">從 Manhattan 側（City Hall 附近）步行過橋，全程約 1.2 公里、30–45 分鐘。建議去程走橋欣賞 Manhattan 天際線，回程搭地鐵 A/C 線。注意：行人走右側，左側是自行車道。</div>
+              <div class="pills">
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  <div><div class="pill-lbl">步行時間</div><div class="pill-val">單程 30–45 分鐘</div></div>
+                </div>
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                  <div><div class="pill-lbl">費用</div><div class="pill-val">免費</div></div>
+                </div>
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  <div><div class="pill-lbl">小撇步</div><div class="pill-val">早上光線好，人也少</div></div>
+                </div>
+              </div>
+              <div class="tags"><span class="tag t-sight">地標</span></div>
+            </div>
+          </div>
+
+          <div class="tl-row">
+            <div class="tl-left"><div class="tl-dot key"></div></div>
+            <div class="tl-r">
+              <div class="tl-time">下午 1:30</div>
+              <div class="tl-title">DUMBO</div>
+              <div class="tl-desc">紐約最上鏡的街區。必拍：Washington St 與 Front St 交叉口，橋洞完美框住 Manhattan Bridge，遠景是 Empire State Building。下午陽光從西側打來最美。附近有 Time Out Market 可吃午餐，Jane's Carousel 迷你旋轉木馬也很好拍。</div>
+              <div class="pills">
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  <div><div class="pill-lbl">拍照點</div><div class="pill-val">Washington St & Front St</div></div>
+                </div>
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  <div><div class="pill-lbl">最佳時段</div><div class="pill-val">下午 2–5pm（順光）</div></div>
+                </div>
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                  <div><div class="pill-lbl">交通</div><div class="pill-val">地鐵 A/C High St 站</div></div>
+                </div>
+              </div>
+              <div class="tags"><span class="tag t-sight">街區</span><span class="tag t-food">美食</span></div>
+            </div>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- DAY 3 -->
+      <article class="day-card">
+        <div class="day-banner-strip two">
+          <img src="https://images.unsplash.com/photo-1445346366695-5bf62de05412?w=700&auto=format&fit=crop&q=80" alt="Central Park" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1503640838962-d3d3cadf1847?w=700&auto=format&fit=crop&q=80" alt="Times Square" loading="lazy">
+        </div>
+        <div class="day-head">
+          <div>
+            <div class="day-num-lbl">Day</div>
+            <div class="day-num-big">03</div>
+          </div>
+          <div class="day-head-r">
+            <div class="day-title">Midtown · 文化藝術大日</div>
+            <div class="day-date">Thursday, June 18</div>
+          </div>
+        </div>
+        <div class="tl">
+
+          <div class="tl-row">
+            <div class="tl-left"><div class="tl-dot key"></div></div>
+            <div class="tl-r">
+              <div class="tl-time">早上 8:30</div>
+              <div class="tl-title">Central Park</div>
+              <div class="tl-desc">843 英畝的城市綠肺。建議從 59th St 入園，沿 The Mall 林蔭大道走到 Bethesda Fountain，再繞去 Bow Bridge 拱橋——紐約最多電影取景的橋。6 月天長，清早光線柔和，人也少。</div>
+              <div class="pills">
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  <div><div class="pill-lbl">開放時間</div><div class="pill-val">06:00 – 01:00</div></div>
+                </div>
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                  <div><div class="pill-lbl">費用</div><div class="pill-val">免費</div></div>
+                </div>
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  <div><div class="pill-lbl">必訪</div><div class="pill-val">Bow Bridge · Bethesda Fountain · The Mall</div></div>
+                </div>
+              </div>
+              <div class="tags"><span class="tag t-nature">公園</span></div>
+            </div>
+          </div>
+
+          <div class="tl-row">
+            <div class="tl-left"><div class="tl-dot"></div></div>
+            <div class="tl-r">
+              <div class="tl-time">上午 10:30</div>
+              <div class="tl-title">Trump Tower</div>
+              <div class="tl-desc">Fifth Ave 725 號，粉色大理石大廳可自由進入參觀。外觀拍照後沿 5th Ave 往南走，可順逛 Bergdorf Goodman 精品百貨的橱窗。</div>
+              <div class="pills">
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                  <div><div class="pill-lbl">費用</div><div class="pill-val">免費（大廳開放）</div></div>
+                </div>
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <div><div class="pill-lbl">地址</div><div class="pill-val">725 5th Ave（56th St 路口）</div></div>
+                </div>
+              </div>
+              <div class="tags"><span class="tag t-sight">地標</span></div>
+            </div>
+          </div>
+
+          <div class="tl-row">
+            <div class="tl-left"><div class="tl-dot key"></div></div>
+            <div class="tl-r">
+              <div class="tl-time">下午 12:00</div>
+              <div class="tl-title">MoMA — 現代藝術博物館</div>
+              <div class="tl-desc">全球最重要的現代藝術殿堂。Monet《睡蓮》系列（5F）、Picasso《亞維農的少女》、Warhol《Campbell's Soup Cans》都在這。建議先上高樓層再往下逛，留 3 小時以上。週五 16:00–21:00 為 Pay-What-You-Wish（隨意付）時段。</div>
+              <div class="pills">
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  <div><div class="pill-lbl">開放時間</div><div class="pill-val">10:30–17:30<br>週五延至 21:00</div></div>
+                </div>
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                  <div><div class="pill-lbl">票價</div><div class="pill-val">成人 $30<br>週五晚隨意付</div></div>
+                </div>
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <div><div class="pill-lbl">地址</div><div class="pill-val">11 W 53rd St</div></div>
+                </div>
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  <div><div class="pill-lbl">建議</div><div class="pill-val">提前線上購票，避免排隊</div></div>
+                </div>
+              </div>
+              <div class="tags"><span class="tag t-art">藝術</span></div>
+            </div>
+          </div>
+
+          <div class="tl-row">
+            <div class="tl-left"><div class="tl-dot"></div></div>
+            <div class="tl-r">
+              <div class="tl-time">傍晚 17:30</div>
+              <div class="tl-title">時代廣場</div>
+              <div class="tl-desc">從 MoMA 步行 10 分鐘。白天就是廣告牆，入夜霓虹全開才是真正的時代廣場。找個咖啡廳坐一下等天黑，再好好拍一波。</div>
+              <div class="tags"><span class="tag t-sight">地標</span></div>
+            </div>
+          </div>
+
+          <div class="tl-row">
+            <div class="tl-left"><div class="tl-dot key"></div></div>
+            <div class="tl-r">
+              <div class="tl-time">晚餐 19:30</div>
+              <div class="tl-title">Keens Steakhouse</div>
+              <div class="tl-desc">1885 年開業，紐約最老牌牛排館之一。鎮店之寶是 Mutton Chop（羊排）與乾式熟成牛排，牆上掛滿數千支歷史煙斗，老派紳士氣氛濃厚。</div>
+              <div class="pills">
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  <div><div class="pill-lbl">營業時間</div><div class="pill-val">Mon–Fri 11:45–22:00<br>Sat 17:00–22:00</div></div>
+                </div>
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                  <div><div class="pill-lbl">人均消費</div><div class="pill-val">$100–150 USD</div></div>
+                </div>
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <div><div class="pill-lbl">地址</div><div class="pill-val">72 W 36th St</div></div>
+                </div>
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  <div><div class="pill-lbl">招牌</div><div class="pill-val">Mutton Chop · Prime Rib</div></div>
+                </div>
+              </div>
+              <div class="tags"><span class="tag t-food">必吃</span></div>
+            </div>
+          </div>
+
+        </div>
+        <div class="keens">
+          <div class="keens-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <div>
+            <div class="keens-title">Keens Steakhouse — 請提前訂位</div>
+            <div class="keens-detail">週四晚熱門時段極易客滿，建議至少提前 2 週透過官網或 OpenTable 訂位。若訂不到正餐，可試 Bar Area（先到先得）。</div>
+            <span class="keens-badge">現在就訂位</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- DAY 4 -->
+      <article class="day-card">
+        <img class="day-banner" src="https://images.unsplash.com/photo-1544305560-0a95ee336ac8?w=800&auto=format&fit=crop&q=80" alt="The High Line" loading="lazy">
+        <div class="day-head">
+          <div>
+            <div class="day-num-lbl">Day</div>
+            <div class="day-num-big">04</div>
+          </div>
+          <div class="day-head-r">
+            <div class="day-title">West Side · Village</div>
+            <div class="day-date">Friday, June 19</div>
+          </div>
+        </div>
+        <div class="tl">
+
+          <div class="tl-row">
+            <div class="tl-left"><div class="tl-dot key"></div></div>
+            <div class="tl-r">
+              <div class="tl-time">早餐 8:30</div>
+              <div class="tl-title">Ess-a-Bagel</div>
+              <div class="tl-desc">紐約貝果朝聖地。Everything Bagel（芝麻、大蒜、洋蔥混搭）夾 Lox（煙燻鮭魚）+ Cream Cheese 是標配。分量很大，一個就吃飽。</div>
+              <div class="pills">
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  <div><div class="pill-lbl">營業時間</div><div class="pill-val">Mon–Fri 06:00–17:00<br>Sat–Sun 06:00–16:00</div></div>
+                </div>
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                  <div><div class="pill-lbl">費用</div><div class="pill-val">$12–18 / 人</div></div>
+                </div>
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  <div><div class="pill-lbl">推薦</div><div class="pill-val">Everything + Lox + Cream Cheese</div></div>
+                </div>
+              </div>
+              <div class="tags"><span class="tag t-food">必吃</span></div>
+            </div>
+          </div>
+
+          <div class="tl-row">
+            <div class="tl-left"><div class="tl-dot key"></div></div>
+            <div class="tl-r">
+              <div class="tl-time">上午 10:00</div>
+              <div class="tl-title">The High Line</div>
+              <div class="tl-desc">廢棄高架鐵路改建的空中公園，全長 2.33 公里。沿途有藝術裝置、植栽造景，可俯瞰 West Chelsea 街道與 Hudson River。從南端 Gansevoort St 走到北端 34th St，邊走邊停約 1.5–2 小時。</div>
+              <div class="pills">
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  <div><div class="pill-lbl">開放時間</div><div class="pill-val">07:00–22:00（6–9月）</div></div>
+                </div>
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                  <div><div class="pill-lbl">費用</div><div class="pill-val">免費</div></div>
+                </div>
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  <div><div class="pill-lbl">入口</div><div class="pill-val">南端 Gansevoort St 開始走</div></div>
+                </div>
+              </div>
+              <div class="tags"><span class="tag t-nature">公園</span><span class="tag t-art">藝術</span></div>
+            </div>
+          </div>
+
+          <div class="tl-row">
+            <div class="tl-left"><div class="tl-dot key"></div></div>
+            <div class="tl-r">
+              <div class="tl-time">中午 12:30</div>
+              <div class="tl-title">Chelsea Market</div>
+              <div class="tl-desc">前身是 Nabisco 餅乾工廠，工業磚牆風格室內市場，50+ 餐廳攤位。推薦：Los Tacos No. 1（墨西哥捲餅）、The Lobster Place（現點生猛龍蝦）、Mokbar（韓式拉麵）。High Line 北端直接走下來就到。</div>
+              <div class="pills">
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  <div><div class="pill-lbl">開放時間</div><div class="pill-val">Mon–Sat 07:00–22:00<br>Sun 08:00–21:00</div></div>
+                </div>
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <div><div class="pill-lbl">地址</div><div class="pill-val">75 9th Ave，High Line 步行即達</div></div>
+                </div>
+              </div>
+              <div class="tags"><span class="tag t-food">美食</span></div>
+            </div>
+          </div>
+
+          <div class="tl-row">
+            <div class="tl-left"><div class="tl-dot"></div></div>
+            <div class="tl-r">
+              <div class="tl-time">下午 14:30</div>
+              <div class="tl-title">Greenwich Village</div>
+              <div class="tl-desc">從 Chelsea Market 步行約 15 分鐘。Washington Square Park 白色拱門是地標；往西走是 West Village，鵝卵石街道、紅磚排屋，紐約最浪漫的街道之一。Bleecker St 有獨立書店與精選咖啡館，適合坐下來發呆。</div>
+              <div class="pills">
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  <div><div class="pill-lbl">亮點</div><div class="pill-val">Washington Square Park · Bleecker St · West Village 鵝卵石街</div></div>
+                </div>
+              </div>
+              <div class="tags"><span class="tag t-sight">街區</span></div>
+            </div>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- DAY 5 -->
+      <article class="day-card">
+        <img class="day-banner" src="https://images.unsplash.com/photo-1439588354915-f169a50c8a9d?w=800&auto=format&fit=crop&q=80" alt="SoHo New York" loading="lazy">
+        <div class="day-head">
+          <div>
+            <div class="day-num-lbl">Day</div>
+            <div class="day-num-big">05</div>
+          </div>
+          <div class="day-head-r">
+            <div class="day-title">市集 · SoHo · 收尾</div>
+            <div class="day-date">Saturday, June 20</div>
+          </div>
+        </div>
+        <div class="tl">
+
+          <div class="tl-row">
+            <div class="tl-left"><div class="tl-dot key"></div></div>
+            <div class="tl-r">
+              <div class="tl-time">上午 11:00</div>
+              <div class="tl-title">Smorgasburg</div>
+              <div class="tl-desc">紐約規模最大的露天美食市集，100+ 攤位，週六限定。嘗各種紐約特色小食：Ramen Burger、Thai 甜品、各式民族料理。入場免費，邊走邊吃。</div>
+              <div class="pills">
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  <div><div class="pill-lbl">時間</div><div class="pill-val">週六 11:00–18:00</div></div>
+                </div>
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                  <div><div class="pill-lbl">入場</div><div class="pill-val">免費</div></div>
+                </div>
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  <div><div class="pill-lbl">注意</div><div class="pill-val">出發前確認當週地點（Brooklyn 或 Manhattan）</div></div>
+                </div>
+              </div>
+              <div class="tags"><span class="tag t-food">市集</span></div>
+            </div>
+          </div>
+
+          <div class="tl-row">
+            <div class="tl-left"><div class="tl-dot key"></div></div>
+            <div class="tl-r">
+              <div class="tl-time">下午 13:30</div>
+              <div class="tl-title">SoHo</div>
+              <div class="tl-desc">精品旗艦店、獨立選品店、街頭塗鴉與鑄鐵建築（Cast Iron District）交錯的紐約最潮街區。Prince St、Spring St、Broadway 是主軸。掃紀念品、買件紐約限定就在這。</div>
+              <div class="pills">
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                  <div><div class="pill-lbl">交通</div><div class="pill-val">地鐵 N/R/W Prince St 站</div></div>
+                </div>
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  <div><div class="pill-lbl">亮點</div><div class="pill-val">Prince St · Spring St · 鑄鐵建築群</div></div>
+                </div>
+              </div>
+              <div class="tags"><span class="tag t-sight">街區</span></div>
+            </div>
+          </div>
+
+          <div class="tl-row">
+            <div class="tl-left"><div class="tl-dot"></div></div>
+            <div class="tl-r">
+              <div class="tl-time">下午 15:30（有時間再去）</div>
+              <div class="tl-title">Hudson Yards + The Vessel</div>
+              <div class="tl-desc">紐約最新現代地標。The Vessel 是 154 段螺旋階梯構成的蜂巢狀公共裝置，外觀拍照免費。旁邊 Edge 戶外觀景台可加購，景觀不遜 Top of the Rock。</div>
+              <div class="pills">
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  <div><div class="pill-lbl">注意</div><div class="pill-val">出發前確認 The Vessel 是否開放</div></div>
+                </div>
+                <div class="pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                  <div><div class="pill-lbl">Edge 票價</div><div class="pill-val">$36–43 USD</div></div>
+                </div>
+              </div>
+              <div class="tags"><span class="tag t-opt">選加</span><span class="tag t-sight">地標</span></div>
+            </div>
+          </div>
+
+          <div class="tl-row">
+            <div class="tl-left"><div class="tl-dot key"></div></div>
+            <div class="tl-r">
+              <div class="tl-time">晚上 22:00</div>
+              <div class="tl-title">出發前往 JFK</div>
+              <div class="tl-desc">CI11 凌晨 01:15 起飛，建議 22:00 離開酒店。地鐵 7 號線 → Jamaica → AirTrain，或叫 Uber 約 $50–70（深夜加成）。預留 3 小時報到。</div>
+              <div class="tags"><span class="tag t-flight">航班</span></div>
+            </div>
+          </div>
+
+        </div>
+        <div class="note">Day 5 是週六，Smorgasburg 地點每週可能不同（Brooklyn / Manhattan），出發前查官網確認。別玩太晚，深夜還要趕機場。</div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="sec" style="padding-bottom: 48px;">
+    <div class="sec-label">交通指南</div>
+    <div class="tx-grid">
+
+      <!-- 票券 -->
+      <div class="tx-card full">
+        <div class="tx-card-head">
+          <div class="tx-icon blue">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+          </div>
+          <div>
+            <div class="tx-card-title">票券選擇</div>
+            <div class="tx-card-sub">建議直接用信用卡感應，不需另外買卡</div>
+          </div>
+        </div>
+        <table class="fare-table">
+          <thead>
+            <tr><th>方案</th><th>費用</th><th>說明</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>OMNY 感應<span class="rec-badge">推薦</span></td>
+              <td>$2.90 / 次<br>週上限 $34</td>
+              <td>Visa / Mastercard contactless 或 Apple Pay 直接感應進站。單週累計滿 $34 後當週剩餘免費，等同無限次票，不需預先購買。</td>
+            </tr>
+            <tr>
+              <td>7 日 MetroCard</td>
+              <td>$34 固定</td>
+              <td>效果同 OMNY 週上限，但需在自動售票機購買（逐步淘汰中），不如直接刷卡方便。</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="tx-alert">你們 5 天大概搭超過 12 趟地鐵，觸碰 $34 上限後就等於免費。用 OMNY 最省事，不需要排隊買票機。</div>
+      </div>
+
+      <!-- JFK 往返 -->
+      <div class="tx-card full">
+        <div class="tx-card-head">
+          <div class="tx-icon amber">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          </div>
+          <div>
+            <div class="tx-card-title">JFK ↔ Flushing 飯店</div>
+            <div class="tx-card-sub">深夜抵達 / 深夜出發，兩段都建議 Uber</div>
+          </div>
+        </div>
+        <div class="route-list">
+          <div class="route-row">
+            <div class="route-row-left">
+              <div class="route-label">Uber / Lyft（推薦）</div>
+              <div class="route-detail">JFK → Flushing 直達，約 30–45 分鐘。深夜拖行李轉車很累，划算。</div>
+            </div>
+            <div class="route-badge">$40–55</div>
+          </div>
+          <div class="route-row">
+            <div class="route-row-left">
+              <div class="route-label">AirTrain + 地鐵（備用）</div>
+              <div class="route-detail">AirTrain → Jamaica 站 → 地鐵 E 線 → 74th St–Roosevelt Ave 轉 <span class="line line-7">7</span> → Flushing Main St。全程約 1 小時 15 分。</div>
+            </div>
+            <div class="route-badge">~$12</div>
+          </div>
+          <div class="route-row">
+            <div class="route-row-left">
+              <div class="route-label">回程（Day 5，22:00 出發）</div>
+              <div class="route-detail">週六深夜 + 行李，強烈建議 Uber。可能有週末溢價。</div>
+            </div>
+            <div class="route-badge">$50–70</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 每日路線 -->
+      <div class="tx-card full">
+        <div class="tx-card-head">
+          <div class="tx-icon green">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <div class="tx-card-title">每日主要路線</div>
+            <div class="tx-card-sub">從 Flushing 出發，地鐵 7 號線是你們的主幹線</div>
+          </div>
+        </div>
+        <div class="route-list">
+          <div class="route-row">
+            <div class="route-row-left">
+              <div class="route-label">Day 2 — Flushing → 華爾街</div>
+              <div class="route-detail"><span class="line line-7">7</span> → Times Sq 轉 <span class="line line-45">4/5</span> → Fulton St 站。約 45–55 分鐘。</div>
+            </div>
+            <div class="route-badge">~50 分</div>
+          </div>
+          <div class="route-row">
+            <div class="route-row-left">
+              <div class="route-label">Day 2 — DUMBO 回程</div>
+              <div class="route-detail"><span class="line line-ace">A/C</span> High St–Brooklyn Bridge 站 → 回 Manhattan 轉 <span class="line line-7">7</span>。</div>
+            </div>
+            <div class="route-badge"></div>
+          </div>
+          <div class="route-row">
+            <div class="route-row-left">
+              <div class="route-label">Day 3 — Flushing → Central Park / MoMA</div>
+              <div class="route-detail"><span class="line line-7">7</span> 直達 5th Ave–Bryant Park，或 Times Sq 下車步行。約 30–35 分鐘。</div>
+            </div>
+            <div class="route-badge">~33 分</div>
+          </div>
+          <div class="route-row">
+            <div class="route-row-left">
+              <div class="route-label">Day 4 — Flushing → High Line</div>
+              <div class="route-detail"><span class="line line-7">7</span> → Times Sq 轉 <span class="line line-ace">A/C/E</span> → 14th St 站下車。約 40 分鐘。</div>
+            </div>
+            <div class="route-badge">~40 分</div>
+          </div>
+          <div class="route-row">
+            <div class="route-row-left">
+              <div class="route-label">Day 4 — Chelsea Market → Greenwich Village</div>
+              <div class="route-detail">步行 15 分鐘即達，不需搭車。</div>
+            </div>
+            <div class="route-badge">步行</div>
+          </div>
+          <div class="route-row">
+            <div class="route-row-left">
+              <div class="route-label">Day 5 — Flushing → SoHo</div>
+              <div class="route-detail"><span class="line line-7">7</span> → Times Sq 轉 <span class="line line-nrw">N/R/W</span> → Prince St 站。約 40 分鐘。</div>
+            </div>
+            <div class="route-badge">~40 分</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- App + 提醒 -->
+      <div class="tx-card">
+        <div class="tx-card-head">
+          <div class="tx-icon gray">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          </div>
+          <div>
+            <div class="tx-card-title">建議 App</div>
+          </div>
+        </div>
+        <div class="app-list">
+          <div class="app-row"><div class="app-dot"></div><div class="app-name">Citymapper</div><div class="app-desc">NYC 地鐵即時班次最準，比 Google Maps 好用</div></div>
+          <div class="app-row"><div class="app-dot"></div><div class="app-name">Uber / Lyft</div><div class="app-desc">深夜、帶行李、趕機場必備</div></div>
+          <div class="app-row"><div class="app-dot"></div><div class="app-name">Google Maps</div><div class="app-desc">步行導航夠用，離線地圖先下載好</div></div>
+        </div>
+      </div>
+
+      <!-- 提醒 -->
+      <div class="tx-card">
+        <div class="tx-card-head">
+          <div class="tx-icon amber">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <div>
+            <div class="tx-card-title">注意事項</div>
+          </div>
+        </div>
+        <div class="app-list">
+          <div class="app-row"><div class="app-dot"></div><div class="app-name" style="min-width:auto;margin-right:8px;">週末改線</div><div class="app-desc">NYC 地鐵週末常有路線調整，出門前用 Citymapper 確認一次</div></div>
+          <div class="app-row"><div class="app-dot"></div><div class="app-name" style="min-width:auto;margin-right:8px;">7 號線深夜</div><div class="app-desc">主幹線 24 小時有車，但深夜班距拉長，約 20–30 分一班</div></div>
+          <div class="app-row"><div class="app-dot"></div><div class="app-name" style="min-width:auto;margin-right:8px;">電梯覆蓋率</div><div class="app-desc">NYC 地鐵不是每站都有電梯，帶大行李建議叫 Uber</div></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <strong>New York · June 2026</strong><br>
+  Sean &amp; 旅伴 · Have a great trip
+</footer>
+
+</body>
+</html>
